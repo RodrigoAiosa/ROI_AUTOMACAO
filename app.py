@@ -14,7 +14,7 @@ from openpyxl.drawing.image import Image as XLImage
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="ROI de Automação",
-    page_icon="🤖",
+    page_icon="🦉",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -482,5 +482,6 @@ Em <strong>{anos} ano(s)</strong>, o ROI é de <strong>{roi:,.0f}%</strong> com 
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.caption("Desenvolvido com Streamlit · ROI = ((Benefício − Custo) / Custo) × 100")
+
 
 
