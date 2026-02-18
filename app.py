@@ -104,6 +104,51 @@ econ_mensal   = benef_mensal - custo_manut
 payback       = (custo_dev / econ_mensal) if econ_mensal > 0 else float('inf')
 
 
+# ── Formatação de payback legível ──────────────────────────────────────────────
+def fmt_payback(payback_meses, modo="longo"):
+    """
+    Converte payback em meses (float) para texto legível.
+
+    modo="longo"  → "2 meses e 3 dias"   (para resumo/Excel)
+    modo="curto"  → "2m 3d"              (para card compacto)
+    """
+    if payback_meses == float('inf'):
+        return "indefinido" if modo == "longo" else "∞"
+
+    dias_total = payback_meses * 30  # 1 mês = 30 dias (convencional)
+
+    if dias_total < 1:
+        return "menos de 1 dia" if modo == "longo" else "< 1d"
+
+    if dias_total < 30:
+        dias = round(dias_total)
+        return f"{dias} dia{'s' if dias > 1 else ''}" if modo == "longo" else f"{dias}d"
+
+    meses = int(payback_meses)
+    dias  = round((payback_meses - meses) * 30)
+
+    # Ajuste de overflow: 30 dias → +1 mês
+    if dias >= 30:
+        meses += 1
+        dias   = 0
+
+    if modo == "curto":
+        return f"{meses}m {dias}d" if dias > 0 else f"{meses}m"
+
+    # modo longo
+    partes = []
+    if meses > 0:
+        partes.append(f"{meses} {'mês' if meses == 1 else 'meses'}")
+    if dias > 0:
+        partes.append(f"{dias} {'dia' if dias == 1 else 'dias'}")
+
+    return " e ".join(partes)
+
+
+payback_texto = fmt_payback(payback, modo="longo")   # ex: "2 meses e 3 dias"
+payback_curto = fmt_payback(payback, modo="curto")   # ex: "2m 3d"  (card)
+
+
 # ── Textos de resumo (computados uma vez, usados no app e no Excel) ─────────
 veredicto_excel = ("Excelente investimento" if roi > 200 else
                    "Bom investimento"       if roi > 50  else
@@ -114,8 +159,6 @@ veredicto_emoji = ("\u2705 Excelente investimento." if roi > 200 else
                    "\u2705 Bom investimento."       if roi > 50  else
                    "\u26a0\ufe0f Investimento marginal."  if roi > 0   else
                    "\u274c Preju\u00edzo \u2014 revise os par\u00e2metros.")
-
-payback_texto = (f"{round(payback * 30)} dias" if payback < 1 else f"{payback:.1f} meses") if payback != float('inf') else "indefinido"
 
 linhas_resumo = [
     f"Cen\u00e1rio selecionado",
@@ -215,8 +258,6 @@ def gerar_excel():
     ws.row_dimensions[11].height = 18
 
     veredicto = ("Excelente investimento" if roi > 200 else "Bom investimento" if roi > 50 else "Marginal" if roi > 0 else "Prejuizo")
-    payback_dias = round(payback * 30)
-    payback_txt = (f"{payback_dias} dia(s)" if payback < 1 else f"{payback:.1f} meses") if payback != float('inf') else "Indeterminado"
 
     resultados = [
         ("Benefício Mensal",   benef_mensal,  '"R$"#,##0.00', "Horas × Valor/hora"),
@@ -224,7 +265,7 @@ def gerar_excel():
         ("Benefício Total",    benef_total,   '"R$"#,##0.00', f"Acumulado em {anos} ano(s)"),
         ("Lucro Líquido",      lucro_liquido, '"R$"#,##0.00', "Benefício Total − Custo Total"),
         (f"ROI ({anos}a)",     roi / 100,     '0.00%',        veredicto),
-        ("Payback",            payback_txt,   None,           "Meses para recuperar investimento"),
+        ("Payback",            payback_texto, None,           "Tempo para recuperar o investimento"),
     ]
     for i, (lbl, v, fmt, obs) in enumerate(resultados, 12):
         val_cell(ws.cell(i, 1), lbl, fc="FF9CA3AF", bg="FF1A1A2E")
@@ -378,7 +419,6 @@ def gerar_excel():
     img.height = 360
     img_row = graf_row + 1
     ws3.add_image(img, f"A{img_row}")
-    # Reserve rows for image height
     for rr in range(img_row, img_row + 20):
         ws3.row_dimensions[rr].height = 18
 
@@ -413,12 +453,11 @@ st.markdown('<div class="section-title">Resultados</div>', unsafe_allow_html=Tru
 c1, c2, c3, c4, c5 = st.columns(5)
 
 pay_cor = "metric-value" if payback < 12 else "metric-value warning"
-payback_str = (f"{round(payback*30)}d" if payback < 1 else f"{payback:.1f}m") if payback != float('inf') else "∞"
 
 with c1:
     st.markdown(f'<div class="metric-card"><div class="metric-label">Benefício Mensal</div><div class="metric-value info">{fmt_brl(benef_mensal)}</div></div>', unsafe_allow_html=True)
 with c2:
-    st.markdown(f'<div class="metric-card"><div class="metric-label">Payback</div><div class="{pay_cor}">{payback_str}</div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card"><div class="metric-label">Payback</div><div class="{pay_cor}">{payback_curto}</div></div>', unsafe_allow_html=True)
 with c3:
     roi_cor = cor_card(roi, "metric-value", "metric-value danger")
     st.markdown(f'<div class="metric-card"><div class="metric-label">ROI ({anos}a)</div><div class="{roi_cor}">{fmt_roi(roi)}</div></div>', unsafe_allow_html=True)
@@ -444,7 +483,8 @@ fig.add_hline(y=0, line_dash="dot", line_color="#6b7280", line_width=1)
 
 if payback != float('inf') and payback <= meses_total:
     fig.add_vline(x=payback, line_dash="dot", line_color="#fb923c", line_width=1.5,
-                  annotation_text=f"Payback: {round(payback*30)}d" if payback < 1 else f"Payback: {payback:.1f}m", annotation_font_color="#fb923c", annotation_position="top right")
+                  annotation_text=f"Payback: {payback_texto}",
+                  annotation_font_color="#fb923c", annotation_position="top right")
 
 fig.update_layout(
     paper_bgcolor="#0a0a0f", plot_bgcolor="#0f0f1a",
@@ -482,6 +522,3 @@ Em <strong>{anos} ano(s)</strong>, o ROI é de <strong>{roi:,.0f}%</strong> com 
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.caption("Desenvolvido com Streamlit · ROI = ((Benefício − Custo) / Custo) × 100")
-
-
-
