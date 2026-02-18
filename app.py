@@ -14,7 +14,7 @@ from openpyxl.drawing.image import Image as XLImage
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="ROI de Automação",
-    page_icon="🦉",
+    page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -444,7 +444,7 @@ fig.add_hline(y=0, line_dash="dot", line_color="#6b7280", line_width=1)
 
 if payback != float('inf') and payback <= meses_total:
     fig.add_vline(x=payback, line_dash="dot", line_color="#fb923c", line_width=1.5,
-                  annotation_text=f"Payback: {payback:.1f}m", annotation_font_color="#fb923c", annotation_position="top right")
+                  annotation_text=f"Payback: {round(payback*30)}d" if payback < 1 else f"Payback: {payback:.1f}m", annotation_font_color="#fb923c", annotation_position="top right")
 
 fig.update_layout(
     paper_bgcolor="#0a0a0f", plot_bgcolor="#0f0f1a",
@@ -478,5 +478,7 @@ Em <strong>{anos} ano(s)</strong>, o ROI é de <strong>{roi:,.0f}%</strong> com 
 {veredicto_emoji}
 </p>
 </div>
-
 """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+st.caption("Desenvolvido com Streamlit · ROI = ((Benefício − Custo) / Custo) × 100")
