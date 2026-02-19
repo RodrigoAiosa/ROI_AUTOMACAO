@@ -317,12 +317,19 @@ with st.expander("📋 Ver tabela de projeção mês a mês"):
     })
     st.dataframe(df_proj, use_container_width=True, hide_index=True)
 
-# ── Resumo da Viabilidade (Texto Atualizado) ───────────────────────────────────
+# ── Resumo da Viabilidade ──────────────────────────────────────────────────────
+linha_manutencao = (
+    f"A manutenção de <strong>R$ {custo_manut:,.2f}</strong> representa apenas "
+    f"<strong>{perc_manut:.1f}%</strong> do benefício gerado "
+    f"(<strong>R$ {benef_mensal:,.2f}</strong>).<br><br>"
+    if custo_manut > 0 else ""
+)
+
 st.markdown(f"""
 <div class="summary-box">
 <h3 style="color: #4ade80; font-size: 16px; margin-top: 0; margin-bottom: 12px;">Resumo da Viabilidade</h3>
 <p>
-A manutenção de <strong>R$ {custo_manut:,.2f}</strong> representa apenas <strong>{perc_manut:.1f}%</strong> do benefício gerado (<strong>R$ {benef_mensal:,.2f}</strong>).<br><br>
+{linha_manutencao}
 Isso significa que a automação se paga "sozinha" e ainda sobra uma margem de segurança enorme. 
 O Payback de <strong>{payback_texto}</strong> indica que, antes do período de retorno terminar, você já recuperou todo o dinheiro investido no desenvolvimento e na manutenção acumulada.
 <br><br>
@@ -333,4 +340,3 @@ O Payback de <strong>{payback_texto}</strong> indica que, antes do período de r
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.caption("Desenvolvido Por Rodrigo Aiosa, Todos os Diretos Reservados")
-
