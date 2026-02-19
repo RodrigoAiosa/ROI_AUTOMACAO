@@ -255,7 +255,7 @@ with st.sidebar:
 
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown('<div class="header-tag">// Calculadora</div>', unsafe_allow_html=True)
-st.title("ROI de Automação Python")
+st.title("Calculadora ROI de Automação")
 if cenario_sel != "🎯 Personalizado":
     st.markdown(f'<span class="scenario-badge">{cenario_sel}</span>', unsafe_allow_html=True)
 st.caption("Descubra em quanto tempo sua automação se paga — e o quanto ela rende.")
@@ -332,4 +332,5 @@ O Payback de <strong>{payback_texto}</strong> indica que, antes do período de r
 """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
-st.caption("Desenvolvido com Streamlit · ROI = ((Benefício − Custo) / Custo) × 100")
+st.caption("Desenvolvido Por Rodrigo Aiosa, Todos os Diretos Reservados")
+
