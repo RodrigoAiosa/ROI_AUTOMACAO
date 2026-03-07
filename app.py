@@ -45,29 +45,37 @@ label { color: #9ca3af !important; font-size: 13px !important; }
     padding: clamp(12px, 3vw, 18px) clamp(8px, 2vw, 14px); 
     text-align: center; 
     transition: transform 0.2s, border-color 0.2s; 
-    overflow: hidden;
-    min-height: 100px;
+    overflow: visible;
+    min-height: clamp(110px, 20vw, 150px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .metric-card:hover { transform: translateY(-3px); border-color: #4ade80; }
 
 .metric-label { 
     font-family: 'Space Mono', monospace; 
-    font-size: clamp(7px, 1.2vw, 11px); 
+    font-size: clamp(8px, 1.3vw, 11px); 
     text-transform: uppercase; 
     letter-spacing: 1px; 
     color: #6b7280; 
-    margin-bottom: 8px; 
+    margin-bottom: clamp(6px, 1.5vw, 10px); 
     white-space: normal;
     word-wrap: break-word;
+    line-height: 1.3;
 }
 
 .metric-value { 
     font-family: 'Syne', sans-serif; 
-    font-size: clamp(14px, 2.5vw, 26px); 
+    font-size: clamp(16px, 2.8vw, 28px); 
     font-weight: 800; 
     color: #4ade80; 
     word-break: break-word;
     overflow-wrap: break-word;
+    line-height: 1.2;
+    max-width: 100%;
+    padding: 0 4px;
 }
 .metric-value.warning { color: #fb923c; }
 .metric-value.info    { color: #60a5fa; }
@@ -156,17 +164,18 @@ div[data-testid="stDownloadButton"] button:hover {
     }
     
     .metric-card {
-        padding: 10px 8px;
-        min-height: auto;
+        padding: 12px 8px;
+        min-height: 130px;
     }
     
     .metric-label {
-        font-size: 9px;
-        margin-bottom: 6px;
+        font-size: 10px;
+        margin-bottom: 8px;
+        letter-spacing: 0.8px;
     }
     
     .metric-value {
-        font-size: 16px;
+        font-size: 18px;
     }
 }
 
@@ -174,21 +183,23 @@ div[data-testid="stDownloadButton"] button:hover {
 @media (max-width: 480px) {
     .stApp { padding: 0 8px; }
     
-    h1 { font-size: 20px !important; margin-bottom: 4px !important; }
+    h1 { font-size: 22px !important; margin-bottom: 4px !important; }
     
     .metric-card {
-        padding: 8px 6px;
+        padding: 10px 6px;
         border-radius: 8px;
+        min-height: 140px;
     }
     
     .metric-label {
-        font-size: 8px;
-        margin-bottom: 4px;
+        font-size: 9px;
+        margin-bottom: 6px;
         letter-spacing: 0.5px;
     }
     
     .metric-value {
-        font-size: 14px;
+        font-size: 16px;
+        padding: 0 2px;
     }
     
     .summary-box p {
@@ -204,17 +215,18 @@ div[data-testid="stDownloadButton"] button:hover {
 /* Grande (desktop/monitor) */
 @media (min-width: 1600px) {
     .metric-card {
-        min-height: 120px;
+        min-height: 140px;
         padding: 20px;
     }
     
     .metric-label {
         font-size: 12px;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
+        letter-spacing: 1.2px;
     }
     
     .metric-value {
-        font-size: 28px;
+        font-size: 30px;
     }
 }
 
