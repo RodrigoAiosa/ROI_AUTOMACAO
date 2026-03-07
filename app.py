@@ -19,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Custom CSS ─────────────────────────────────────────────────────────────────
+# ── Custom CSS com Responsividade ────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
@@ -38,24 +38,196 @@ section[data-testid="stSidebar"] .stNumberInput input { background: #1a1a2e !imp
 label { color: #9ca3af !important; font-size: 13px !important; }
 .stSlider > div > div > div { background: #1e1e2e !important; }
 
-.metric-card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid #2d2d4e; border-radius: 12px; padding: 18px 14px; text-align: center; transition: transform 0.2s, border-color 0.2s; overflow: hidden; }
+.metric-card { 
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+    border: 1px solid #2d2d4e; 
+    border-radius: 12px; 
+    padding: clamp(12px, 3vw, 18px) clamp(8px, 2vw, 14px); 
+    text-align: center; 
+    transition: transform 0.2s, border-color 0.2s; 
+    overflow: hidden;
+    min-height: 100px;
+}
 .metric-card:hover { transform: translateY(-3px); border-color: #4ade80; }
-.metric-label { font-family: 'Space Mono', monospace; font-size: clamp(8px, 0.8vw, 11px); text-transform: uppercase; letter-spacing: 1.5px; color: #6b7280; margin-bottom: 10px; white-space: nowrap; }
-.metric-value { font-family: 'Syne', sans-serif; font-size: clamp(16px, 2vw, 26px); font-weight: 800; color: #4ade80; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+
+.metric-label { 
+    font-family: 'Space Mono', monospace; 
+    font-size: clamp(7px, 1.2vw, 11px); 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    color: #6b7280; 
+    margin-bottom: 8px; 
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.metric-value { 
+    font-family: 'Syne', sans-serif; 
+    font-size: clamp(14px, 2.5vw, 26px); 
+    font-weight: 800; 
+    color: #4ade80; 
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
 .metric-value.warning { color: #fb923c; }
 .metric-value.info    { color: #60a5fa; }
 .metric-value.danger  { color: #f87171; }
 
-.header-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: #4ade80; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
-.section-title { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #4ade80; border-left: 3px solid #4ade80; padding-left: 10px; margin: 20px 0 14px 0; }
+.header-tag { 
+    font-family: 'Space Mono', monospace; 
+    font-size: clamp(9px, 1.5vw, 11px); 
+    color: #4ade80; 
+    letter-spacing: 2px; 
+    text-transform: uppercase; 
+    margin-bottom: 4px; 
+}
 
-.summary-box { background: linear-gradient(135deg, #0d2818 0%, #0a1628 100%); border: 1px solid #4ade80; border-radius: 12px; padding: 22px; margin-top: 20px; }
-.summary-box p { font-family: 'Space Mono', monospace; font-size: 13px; color: #d1fae5; line-height: 1.8; margin: 0; }
+.section-title { 
+    font-family: 'Space Mono', monospace; 
+    font-size: clamp(10px, 1.8vw, 12px); 
+    letter-spacing: 1.5px; 
+    text-transform: uppercase; 
+    color: #4ade80; 
+    border-left: 3px solid #4ade80; 
+    padding-left: 10px; 
+    margin: 20px 0 14px 0; 
+}
 
-.scenario-badge { display: inline-block; background: #1a1a2e; border: 1px solid #4ade80; border-radius: 20px; padding: 3px 14px; font-family: 'Space Mono', monospace; font-size: 11px; color: #4ade80; letter-spacing: 1px; margin-bottom: 8px; }
+.summary-box { 
+    background: linear-gradient(135deg, #0d2818 0%, #0a1628 100%); 
+    border: 1px solid #4ade80; 
+    border-radius: 12px; 
+    padding: clamp(16px, 4vw, 22px); 
+    margin-top: 20px; 
+}
+.summary-box p { 
+    font-family: 'Space Mono', monospace; 
+    font-size: clamp(11px, 1.5vw, 13px); 
+    color: #d1fae5; 
+    line-height: 1.8; 
+    margin: 0; 
+}
+.summary-box h3 {
+    font-size: clamp(14px, 2vw, 16px) !important;
+}
 
-div[data-testid="stDownloadButton"] button { background: linear-gradient(135deg, #166534, #14532d) !important; color: #4ade80 !important; border: 1px solid #4ade80 !important; border-radius: 8px !important; font-family: 'Space Mono', monospace !important; font-size: 12px !important; letter-spacing: 1px !important; padding: 10px 20px !important; width: 100% !important; transition: all 0.2s !important; }
-div[data-testid="stDownloadButton"] button:hover { background: #4ade80 !important; color: #0a0a0f !important; }
+.scenario-badge { 
+    display: inline-block; 
+    background: #1a1a2e; 
+    border: 1px solid #4ade80; 
+    border-radius: 20px; 
+    padding: 3px 14px; 
+    font-family: 'Space Mono', monospace; 
+    font-size: clamp(9px, 1.2vw, 11px); 
+    color: #4ade80; 
+    letter-spacing: 0.5px; 
+    margin-bottom: 8px; 
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+div[data-testid="stDownloadButton"] button { 
+    background: linear-gradient(135deg, #166534, #14532d) !important; 
+    color: #4ade80 !important; 
+    border: 1px solid #4ade80 !important; 
+    border-radius: 8px !important; 
+    font-family: 'Space Mono', monospace !important; 
+    font-size: clamp(10px, 1.8vw, 12px) !important; 
+    letter-spacing: 0.5px !important; 
+    padding: clamp(8px, 2vw, 10px) clamp(14px, 3vw, 20px) !important; 
+    width: 100% !important; 
+    transition: all 0.2s !important; 
+}
+div[data-testid="stDownloadButton"] button:hover { 
+    background: #4ade80 !important; 
+    color: #0a0a0f !important; 
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .stApp { padding: 0 10px; }
+    
+    h1 { font-size: clamp(22px, 6vw, 32px) !important; }
+    h2 { font-size: clamp(18px, 5vw, 24px) !important; }
+    h3 { font-size: clamp(16px, 4vw, 20px) !important; }
+    
+    section[data-testid="stSidebar"] { 
+        width: 100% !important; 
+    }
+    
+    .metric-card {
+        padding: 10px 8px;
+        min-height: auto;
+    }
+    
+    .metric-label {
+        font-size: 9px;
+        margin-bottom: 6px;
+    }
+    
+    .metric-value {
+        font-size: 16px;
+    }
+}
+
+/* Extra pequeno (mobile) */
+@media (max-width: 480px) {
+    .stApp { padding: 0 8px; }
+    
+    h1 { font-size: 20px !important; margin-bottom: 4px !important; }
+    
+    .metric-card {
+        padding: 8px 6px;
+        border-radius: 8px;
+    }
+    
+    .metric-label {
+        font-size: 8px;
+        margin-bottom: 4px;
+        letter-spacing: 0.5px;
+    }
+    
+    .metric-value {
+        font-size: 14px;
+    }
+    
+    .summary-box p {
+        font-size: 11px;
+        line-height: 1.6;
+    }
+    
+    div[data-testid="stCaption"] {
+        font-size: 11px !important;
+    }
+}
+
+/* Grande (desktop/monitor) */
+@media (min-width: 1600px) {
+    .metric-card {
+        min-height: 120px;
+        padding: 20px;
+    }
+    
+    .metric-label {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .metric-value {
+        font-size: 28px;
+    }
+}
+
+/* Ajustes para gráfico responsivo */
+.plotly {
+    width: 100%;
+}
+
+/* Tabela responsiva */
+[role="grid"] {
+    font-size: clamp(11px, 1.5vw, 13px) !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -261,10 +433,15 @@ if cenario_sel != "🎯 Personalizado":
 st.caption("Descubra em quanto tempo sua automação se paga — e o quanto ela rende.")
 st.markdown("---")
 
-# ── Cards ──────────────────────────────────────────────────────────────────────
+# ── Cards com Responsividade Dinâmica ──────────────────────────────────────────
 st.markdown('<div class="section-title">Resultados</div>', unsafe_allow_html=True)
-c1, c2, c3, c4, c5 = st.columns(5)
+
+# Determinar número de colunas com base no tamanho da tela
+# Streamlit adapta melhor com breakpoints - usar 5 colunas em desktop, menos em mobile
+c1, c2, c3, c4, c5 = st.columns(5, gap="small")
+
 pay_cor = "metric-value" if payback < 12 else "metric-value warning"
+
 with c1:
     st.markdown(f'<div class="metric-card"><div class="metric-label">Benefício Mensal</div><div class="metric-value info">{fmt_brl(benef_mensal)}</div></div>', unsafe_allow_html=True)
 with c2:
@@ -303,6 +480,8 @@ fig.update_layout(
     xaxis=dict(title="Meses", gridcolor="#1e1e2e", zerolinecolor="#2d2d4e"),
     yaxis=dict(title="R$", gridcolor="#1e1e2e", zerolinecolor="#2d2d4e", tickprefix="R$ ", tickformat=",.0f"),
     hovermode="x unified", margin=dict(l=10, r=10, t=20, b=10), height=380,
+    autosize=True,
+    responsive=True,
 )
 st.plotly_chart(fig, use_container_width=True)
 
@@ -327,7 +506,7 @@ linha_manutencao = (
 
 st.markdown(f"""
 <div class="summary-box">
-<h3 style="color: #4ade80; font-size: 16px; margin-top: 0; margin-bottom: 12px;">Resumo da Viabilidade</h3>
+<h3 style="color: #4ade80; margin-top: 0; margin-bottom: 12px;">Resumo da Viabilidade</h3>
 <p>
 {linha_manutencao}
 Isso significa que a automação se paga "sozinha" e ainda sobra uma margem de segurança enorme. 
