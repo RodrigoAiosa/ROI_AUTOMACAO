@@ -42,40 +42,43 @@ label { color: #9ca3af !important; font-size: 13px !important; }
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
     border: 1px solid #2d2d4e; 
     border-radius: 12px; 
-    padding: clamp(12px, 3vw, 18px) clamp(8px, 2vw, 14px); 
+    padding: clamp(14px, 4vw, 20px) clamp(10px, 2.5vw, 16px); 
     text-align: center; 
     transition: transform 0.2s, border-color 0.2s; 
     overflow: visible;
-    min-height: clamp(110px, 20vw, 150px);
+    min-height: clamp(130px, 25vw, 160px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: clamp(4px, 1vw, 8px);
 }
 .metric-card:hover { transform: translateY(-3px); border-color: #4ade80; }
 
 .metric-label { 
     font-family: 'Space Mono', monospace; 
-    font-size: clamp(8px, 1.3vw, 11px); 
+    font-size: clamp(7px, 1.1vw, 10px); 
     text-transform: uppercase; 
-    letter-spacing: 1px; 
+    letter-spacing: 0.8px; 
     color: #6b7280; 
-    margin-bottom: clamp(6px, 1.5vw, 10px); 
     white-space: normal;
     word-wrap: break-word;
-    line-height: 1.3;
+    line-height: 1.2;
+    margin: 0;
 }
 
 .metric-value { 
     font-family: 'Syne', sans-serif; 
-    font-size: clamp(16px, 2.8vw, 28px); 
+    font-size: clamp(14px, 2.2vw, 24px); 
     font-weight: 800; 
     color: #4ade80; 
     word-break: break-word;
     overflow-wrap: break-word;
-    line-height: 1.2;
+    hyphens: auto;
+    line-height: 1.3;
     max-width: 100%;
-    padding: 0 4px;
+    padding: 0 2px;
+    margin: 0;
 }
 .metric-value.warning { color: #fb923c; }
 .metric-value.info    { color: #60a5fa; }
@@ -153,11 +156,11 @@ div[data-testid="stDownloadButton"] button:hover {
 
 /* Responsividade para telas pequenas */
 @media (max-width: 768px) {
-    .stApp { padding: 0 10px; }
+    .stApp { padding: 0 8px; }
     
-    h1 { font-size: clamp(22px, 6vw, 32px) !important; }
-    h2 { font-size: clamp(18px, 5vw, 24px) !important; }
-    h3 { font-size: clamp(16px, 4vw, 20px) !important; }
+    h1 { font-size: clamp(20px, 5.5vw, 28px) !important; }
+    h2 { font-size: clamp(16px, 4.5vw, 22px) !important; }
+    h3 { font-size: clamp(14px, 3.5vw, 18px) !important; }
     
     section[data-testid="stSidebar"] { 
         width: 100% !important; 
@@ -165,68 +168,102 @@ div[data-testid="stDownloadButton"] button:hover {
     
     .metric-card {
         padding: 12px 8px;
-        min-height: 130px;
+        min-height: 150px;
+        gap: 6px;
     }
     
     .metric-label {
-        font-size: 10px;
-        margin-bottom: 8px;
-        letter-spacing: 0.8px;
+        font-size: 8px;
+        letter-spacing: 0.6px;
     }
     
     .metric-value {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
 
 /* Extra pequeno (mobile) */
 @media (max-width: 480px) {
-    .stApp { padding: 0 8px; }
+    .stApp { padding: 0 6px; }
     
-    h1 { font-size: 22px !important; margin-bottom: 4px !important; }
+    h1 { font-size: 18px !important; margin-bottom: 3px !important; }
+    h2 { font-size: 14px !important; }
     
     .metric-card {
         padding: 10px 6px;
         border-radius: 8px;
-        min-height: 140px;
+        min-height: 160px;
+        gap: 5px;
     }
     
     .metric-label {
-        font-size: 9px;
-        margin-bottom: 6px;
-        letter-spacing: 0.5px;
+        font-size: 7.5px;
+        letter-spacing: 0.4px;
+        line-height: 1.1;
     }
     
     .metric-value {
-        font-size: 16px;
+        font-size: 15px;
         padding: 0 2px;
     }
     
-    .summary-box p {
-        font-size: 11px;
-        line-height: 1.6;
+    .summary-box {
+        padding: 12px;
     }
     
-    div[data-testid="stCaption"] {
-        font-size: 11px !important;
+    .summary-box p {
+        font-size: 10px;
+        line-height: 1.5;
+    }
+    
+    .summary-box h3 {
+        font-size: 13px !important;
+        margin-bottom: 8px !important;
+    }
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+    .metric-card {
+        min-height: 145px;
+    }
+    
+    .metric-value {
+        font-size: 15px;
     }
 }
 
 /* Grande (desktop/monitor) */
-@media (min-width: 1600px) {
+@media (min-width: 1200px) {
     .metric-card {
-        min-height: 140px;
-        padding: 20px;
+        min-height: 150px;
+        padding: 18px;
     }
     
     .metric-label {
-        font-size: 12px;
-        margin-bottom: 14px;
-        letter-spacing: 1.2px;
+        font-size: 10px;
+        letter-spacing: 1px;
     }
     
     .metric-value {
-        font-size: 30px;
+        font-size: 24px;
+    }
+}
+
+/* Muito grande (4K monitors) */
+@media (min-width: 1600px) {
+    .metric-card {
+        min-height: 180px;
+        padding: 22px;
+    }
+    
+    .metric-label {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+    
+    .metric-value {
+        font-size: 28px;
     }
 }
 
@@ -237,7 +274,7 @@ div[data-testid="stDownloadButton"] button:hover {
 
 /* Tabela responsiva */
 [role="grid"] {
-    font-size: clamp(11px, 1.5vw, 13px) !important;
+    font-size: clamp(10px, 1.3vw, 13px) !important;
 }
 
 </style>
