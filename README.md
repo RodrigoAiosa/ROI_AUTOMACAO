@@ -3,9 +3,9 @@
 Aplicação web interativa construída com **Streamlit** para calcular o Retorno sobre Investimento (ROI) de automações desenvolvidas em Python. Interface em tela cheia com tema escuro, menu lateral de cenários pré-definidos e exportação para Excel.
 
 ---
-
 ## 🖥️ Preview da Interface
-![Preview da Calculadora](assets/1.png)
+
+![Preview da Interface](1.png)
 
 ## ✨ Funcionalidades
 
