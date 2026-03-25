@@ -5,29 +5,7 @@ Aplicação web interativa construída com **Streamlit** para calcular o Retorno
 ---
 
 ## 🖥️ Preview da Interface
-
-```
-┌─────────────────────┬──────────────────────────────────────────────────┐
-│  SIDEBAR            │  ÁREA PRINCIPAL (tela cheia)                     │
-│                     │                                                  │
-│  📋 Cenário         │  // CALCULADORA                                  │
-│  [ Selecionar ▼ ]   │  ROI de Automação Python                         │
-│                     │                                                  │
-│  — CUSTOS —         │  ┌──────┐ ┌────────┐ ┌──────┐ ┌──────┐ ┌──────┐│
-│  Custo de dev       │  │Benef.│ │Payback │ │ ROI  │ │Lucro │ │Custo ││
-│  Manutenção/mês     │  │Mensal│ │        │ │      │ │Líq.  │ │Total ││
-│                     │  └──────┘ └────────┘ └──────┘ └──────┘ └──────┘│
-│  — BENEFÍCIOS —     │                                                  │
-│  Horas/mês          │  📈 Gráfico de Projeção Acumulada                │
-│  Valor/hora         │                                                  │
-│  Período (anos)     │  📋 Tabela mês a mês (expansível)                │
-│                     │                                                  │
-│  — EXPORTAR —       │  📝 Resumo com veredicto                         │
-│  [📥 Excel]         │                                                  │
-└─────────────────────┴──────────────────────────────────────────────────┘
-```
-
----
+![Preview da Calculadora](assets/1.png)
 
 ## ✨ Funcionalidades
 
