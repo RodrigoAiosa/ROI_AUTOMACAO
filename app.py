@@ -38,13 +38,67 @@ section[data-testid="stSidebar"] .stNumberInput input { background: #1a1a2e !imp
 label { color: #9ca3af !important; font-size: 13px !important; }
 .stSlider > div > div > div { background: #1e1e2e !important; }
 
-.metric-card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid #2d2d4e; border-radius: 12px; padding: 18px 14px; text-align: center; transition: transform 0.2s, border-color 0.2s; overflow: hidden; }
+/* ── Metric Cards ── */
+.metric-card {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid #2d2d4e;
+    border-radius: 12px;
+    padding: 16px 10px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+}
 .metric-card:hover { transform: translateY(-3px); border-color: #4ade80; }
-.metric-label { font-family: 'Space Mono', monospace; font-size: clamp(8px, 0.8vw, 11px); text-transform: uppercase; letter-spacing: 1.5px; color: #6b7280; margin-bottom: 10px; white-space: nowrap; }
-.metric-value { font-family: 'Syne', sans-serif; font-size: clamp(16px, 2vw, 26px); font-weight: 800; color: #4ade80; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+
+.metric-label {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(7px, 0.7vw, 10px);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.metric-value {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(14px, 2.2vw, 26px);
+    font-weight: 800;
+    color: #4ade80;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    display: block;
+    line-height: 1.2;
+    width: 100%;
+}
 .metric-value.warning { color: #fb923c; }
 .metric-value.info    { color: #60a5fa; }
 .metric-value.danger  { color: #f87171; }
+
+/* ── Responsividade por breakpoint ── */
+@media (max-width: 1200px) {
+    .metric-value { font-size: clamp(13px, 1.8vw, 22px); }
+    .metric-label { font-size: clamp(7px, 0.65vw, 9px); letter-spacing: 0.8px; }
+}
+@media (max-width: 768px) {
+    .metric-card  { padding: 14px 8px; min-height: 80px; }
+    .metric-value { font-size: clamp(15px, 4vw, 20px); }
+    .metric-label { font-size: 9px; letter-spacing: 0.5px; }
+}
+@media (max-width: 480px) {
+    .metric-card  { padding: 12px 6px; min-height: 70px; border-radius: 10px; }
+    .metric-value { font-size: clamp(13px, 5vw, 18px); }
+    .metric-label { font-size: 8px; letter-spacing: 0.3px; }
+}
 
 .header-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: #4ade80; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
 .section-title { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #4ade80; border-left: 3px solid #4ade80; padding-left: 10px; margin: 20px 0 14px 0; }
@@ -198,7 +252,7 @@ def gerar_excel():
     hdr(ws["A4"], "PARÂMETROS DE ENTRADA", bg="FF0F2818", fc="FF4ADE80", sz=10)
     for i, h in enumerate(["Parâmetro", "Valor", "Unidade", "", "Parâmetro", "Valor"], 1):
         hdr(ws.cell(5, i), h, sz=9)
-    
+
     params = [
         ("Custo de Desenvolvimento", custo_dev,   "R$",    "Horas economizadas/mês",  horas_mes,  "h/mês"),
         ("Manutenção mensal",        custo_manut, "R$/mês","Valor/hora profissional",  valor_hora, "R$/h"),
