@@ -77,12 +77,12 @@ label { color: #9ca3af !important; font-size: 13px !important; }
 
 .metric-value {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(13px, 1.55vw, 22px); /* mais conservador para caber em 1 linha */
+    font-size: clamp(12px, 1.25vw, 18px); /* teto 18px garante que R$ 22.0k caiba */
     font-weight: 800;
     color: #4ade80;
-    white-space: nowrap;          /* força 1 linha */
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;      /* "..." só se realmente não couber */
+    text-overflow: ellipsis;
     display: block;
     line-height: 1.15;
     width: 100%;
@@ -93,24 +93,24 @@ label { color: #9ca3af !important; font-size: 13px !important; }
 
 /* ── Responsividade por breakpoint ── */
 @media (max-width: 1200px) {
-    .metric-value { font-size: clamp(12px, 1.3vw, 19px); }
+    .metric-value { font-size: clamp(11px, 1.1vw, 16px); }
     .metric-label { font-size: clamp(6px, 0.6vw, 9px); }
 }
 @media (max-width: 900px) {
     .metric-card  { height: 80px; padding: 0 8px; }
-    .metric-value { font-size: clamp(12px, 2.2vw, 17px); }
+    .metric-value { font-size: clamp(11px, 1.9vw, 15px); }
     .metric-label { font-size: 8px; letter-spacing: 0.6px; }
 }
 @media (max-width: 768px) {
     .metrics-row  { grid-template-columns: repeat(3, 1fr); }
     .metric-card  { height: 76px; padding: 0 8px; }
-    .metric-value { font-size: clamp(14px, 3.5vw, 18px); }
+    .metric-value { font-size: clamp(13px, 3vw, 16px); }
     .metric-label { font-size: 8px; letter-spacing: 0.5px; }
 }
 @media (max-width: 480px) {
     .metrics-row  { grid-template-columns: repeat(2, 1fr); }
     .metric-card  { height: 72px; border-radius: 10px; padding: 0 8px; }
-    .metric-value { font-size: clamp(14px, 5.5vw, 18px); }
+    .metric-value { font-size: clamp(13px, 5vw, 16px); }
     .metric-label { font-size: 8px; letter-spacing: 0.3px; }
 }
 
