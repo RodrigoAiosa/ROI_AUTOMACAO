@@ -39,29 +39,36 @@ label { color: #9ca3af !important; font-size: 13px !important; }
 .stSlider > div > div > div { background: #1e1e2e !important; }
 
 /* ── Metric Cards ── */
+.metrics-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 8px;
+}
 .metric-card {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     border: 1px solid #2d2d4e;
     border-radius: 12px;
-    padding: 16px 10px;
+    padding: 0 10px;
     text-align: center;
     transition: transform 0.2s, border-color 0.2s;
-    overflow: visible;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 90px;
+    height: 88px;          /* altura fixa igual para todos */
+    box-sizing: border-box;
 }
 .metric-card:hover { transform: translateY(-3px); border-color: #4ade80; }
 
 .metric-label {
     font-family: 'Space Mono', monospace;
-    font-size: clamp(7px, 0.7vw, 10px);
+    font-size: clamp(7px, 0.65vw, 10px);
     text-transform: uppercase;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
     color: #6b7280;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
@@ -70,14 +77,14 @@ label { color: #9ca3af !important; font-size: 13px !important; }
 
 .metric-value {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(14px, 2.2vw, 26px);
+    font-size: clamp(13px, 1.55vw, 22px); /* mais conservador para caber em 1 linha */
     font-weight: 800;
     color: #4ade80;
-    white-space: normal;
-    word-break: break-word;
-    overflow-wrap: anywhere;
+    white-space: nowrap;          /* força 1 linha */
+    overflow: hidden;
+    text-overflow: ellipsis;      /* "..." só se realmente não couber */
     display: block;
-    line-height: 1.2;
+    line-height: 1.15;
     width: 100%;
 }
 .metric-value.warning { color: #fb923c; }
@@ -86,17 +93,24 @@ label { color: #9ca3af !important; font-size: 13px !important; }
 
 /* ── Responsividade por breakpoint ── */
 @media (max-width: 1200px) {
-    .metric-value { font-size: clamp(13px, 1.8vw, 22px); }
-    .metric-label { font-size: clamp(7px, 0.65vw, 9px); letter-spacing: 0.8px; }
+    .metric-value { font-size: clamp(12px, 1.3vw, 19px); }
+    .metric-label { font-size: clamp(6px, 0.6vw, 9px); }
+}
+@media (max-width: 900px) {
+    .metric-card  { height: 80px; padding: 0 8px; }
+    .metric-value { font-size: clamp(12px, 2.2vw, 17px); }
+    .metric-label { font-size: 8px; letter-spacing: 0.6px; }
 }
 @media (max-width: 768px) {
-    .metric-card  { padding: 14px 8px; min-height: 80px; }
-    .metric-value { font-size: clamp(15px, 4vw, 20px); }
-    .metric-label { font-size: 9px; letter-spacing: 0.5px; }
+    .metrics-row  { grid-template-columns: repeat(3, 1fr); }
+    .metric-card  { height: 76px; padding: 0 8px; }
+    .metric-value { font-size: clamp(14px, 3.5vw, 18px); }
+    .metric-label { font-size: 8px; letter-spacing: 0.5px; }
 }
 @media (max-width: 480px) {
-    .metric-card  { padding: 12px 6px; min-height: 70px; border-radius: 10px; }
-    .metric-value { font-size: clamp(13px, 5vw, 18px); }
+    .metrics-row  { grid-template-columns: repeat(2, 1fr); }
+    .metric-card  { height: 72px; border-radius: 10px; padding: 0 8px; }
+    .metric-value { font-size: clamp(14px, 5.5vw, 18px); }
     .metric-label { font-size: 8px; letter-spacing: 0.3px; }
 }
 
@@ -317,20 +331,35 @@ st.markdown("---")
 
 # ── Cards ──────────────────────────────────────────────────────────────────────
 st.markdown('<div class="section-title">Resultados</div>', unsafe_allow_html=True)
-c1, c2, c3, c4, c5 = st.columns(5)
+
 pay_cor = "metric-value" if payback < 12 else "metric-value warning"
-with c1:
-    st.markdown(f'<div class="metric-card"><div class="metric-label">Benefício Mensal</div><div class="metric-value info">{fmt_brl(benef_mensal)}</div></div>', unsafe_allow_html=True)
-with c2:
-    st.markdown(f'<div class="metric-card"><div class="metric-label">Payback</div><div class="{pay_cor}">{payback_curto}</div></div>', unsafe_allow_html=True)
-with c3:
-    roi_cor = cor_card(roi, "metric-value", "metric-value danger")
-    st.markdown(f'<div class="metric-card"><div class="metric-label">ROI ({anos}a)</div><div class="{roi_cor}">{fmt_roi(roi)}</div></div>', unsafe_allow_html=True)
-with c4:
-    ll_cor = cor_card(lucro_liquido, "metric-value", "metric-value danger")
-    st.markdown(f'<div class="metric-card"><div class="metric-label">Lucro Líquido</div><div class="{ll_cor}">{fmt_brl(lucro_liquido)}</div></div>', unsafe_allow_html=True)
-with c5:
-    st.markdown(f'<div class="metric-card"><div class="metric-label">Custo Total</div><div class="metric-value warning">{fmt_brl(custo_total)}</div></div>', unsafe_allow_html=True)
+roi_cor = cor_card(roi, "metric-value", "metric-value danger")
+ll_cor  = cor_card(lucro_liquido, "metric-value", "metric-value danger")
+
+st.markdown(f"""
+<div class="metrics-row">
+  <div class="metric-card">
+    <div class="metric-label">Benefício Mensal</div>
+    <div class="metric-value info">{fmt_brl(benef_mensal)}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Payback</div>
+    <div class="{pay_cor}">{payback_curto}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">ROI ({anos}a)</div>
+    <div class="{roi_cor}">{fmt_roi(roi)}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Lucro Líquido</div>
+    <div class="{ll_cor}">{fmt_brl(lucro_liquido)}</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">Custo Total</div>
+    <div class="metric-value warning">{fmt_brl(custo_total)}</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
 # ── Gráfico ────────────────────────────────────────────────────────────────────
 st.markdown('<div class="section-title">Projeção Acumulada</div>', unsafe_allow_html=True)
