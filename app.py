@@ -9,6 +9,7 @@ import matplotlib.patches as mpatches
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.drawing.image import Image as XLImage
+from esconder_selo import esconder_selo_streamlit
 
 
 # ── Page config ───────────────────────────────────────────────────────────────
@@ -18,6 +19,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+esconder_selo_streamlit()  # oculta os controles do Streamlit Cloud
 
 # ── Custom CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
