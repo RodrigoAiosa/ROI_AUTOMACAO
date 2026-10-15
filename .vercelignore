@@ -1,0 +1,7 @@
+# O app Streamlit (Python) não roda na Vercel; lá publicamos só o index.html.
+app.py
+esconder_selo.py
+requirements.txt
+.streamlit/
+.devcontainer/
+1.png
