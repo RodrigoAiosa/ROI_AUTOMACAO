@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly-basic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-basic-dist-min@2.35.2/plotly-basic.min.js"></script>
 <style>
 /* Mesmo visual do app Streamlit: fundo quase preto, verde de destaque,
    Syne nos títulos e Space Mono nos números. */
@@ -229,13 +229,18 @@ footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
       ["Custo total", fmtBrl(r.custoTotal), "warn", "dev + manutenção"],
     ].map(([k, v, c, s]) => `<div class="metric"><div class="k">${k}</div><div class="v ${c}" title="${v}">${v}</div><div class="s">${s}</div></div>`).join("");
 
-    desenharGrafico();
     desenharTabela();
     desenharResumo();
     salvarHash();
+    desenharGrafico();
   }
 
   function desenharGrafico() {
+    if (!r) return;
+    if (!window.Plotly) {
+      $("grafico").innerHTML = `<p style="padding:24px;color:#9ca3af;font:400 13px 'Space Mono',monospace">Não foi possível carregar o gráfico agora. Os resultados acima e a tabela abaixo continuam corretos.</p>`;
+      return;
+    }
     const x = r.proj.map((p) => p.mes);
     const tr = [
       { x, y: r.proj.map((p) => p.benef), name: "Benefício acumulado", mode: "lines", line: { color: "#4ade80", width: 2.5 }, hovertemplate: "R$ %{y:,.2f}" },
@@ -317,7 +322,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
   // ------------------------------------------------------- exportar Excel
   let exceljsPronto = null;
   const carregarExcelJs = () => exceljsPronto || (exceljsPronto = new Promise((ok, erro) => {
-    const s = Object.assign(document.createElement("script"), { src: "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js", onload: ok, onerror: () => { exceljsPronto = null; erro(new Error("falha ao carregar")); } });
+    const s = Object.assign(document.createElement("script"), { src: "https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js", onload: ok, onerror: () => { exceljsPronto = null; erro(new Error("falha ao carregar")); } });
     document.head.appendChild(s);
   }));
 
